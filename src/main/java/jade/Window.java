@@ -10,11 +10,13 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 
 public class Window {
+
+    private static Window instance;
+
+
     private int width, height;
     private String title;
     private long glfwWindow;
-
-    private static Window instance;
 
     private Window() {
         this.width = 1920;
@@ -23,10 +25,10 @@ public class Window {
     }
 
     public static Window getInstance() {
-        if(Window.instance == null) {
-            Window.instance = new Window();
+        if(instance == null) {
+            instance = new Window();
         }
-        return Window.instance;
+        return instance;
     }
 
     public void run() {
@@ -65,6 +67,15 @@ public class Window {
             throw new IllegalStateException("Failed to create the GLFW window");
         }
 
+        // Register MouseListener
+        glfwSetCursorPosCallback(glfwWindow, MouseListener::mousePosCallback);
+        glfwSetMouseButtonCallback(glfwWindow, MouseListener::mouseButtonCallback);
+        glfwSetScrollCallback(glfwWindow, MouseListener::mouseScrollCallback);
+
+        // Register KeyListener
+        glfwSetKeyCallback(glfwWindow, KeyListener::keyCallback);
+
+
         // Make the OpenGL context current
         glfwMakeContextCurrent(glfwWindow);
         // Enable V-Sync
@@ -91,6 +102,11 @@ public class Window {
 
             glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
+
+            if(KeyListener.isKeyPressed(GLFW_KEY_E)) {
+                System.out.println("E");
+            }
+
 
             glfwSwapBuffers(glfwWindow);
         }
