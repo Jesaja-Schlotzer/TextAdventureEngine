@@ -3,7 +3,9 @@ package jade;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
+import util.Time;
 
+import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.system.MemoryUtil.NULL;
@@ -38,6 +40,7 @@ public class Window {
         loop();
 
         // Free memory
+        glfwFreeCallbacks(glfwWindow);
         glfwDestroyWindow(glfwWindow);
 
         // Terminate GLFW and free the error callback
@@ -96,6 +99,10 @@ public class Window {
 
 
     private void loop() {
+        float beginTime = Time.getTime();
+        float endTime = Time.getTime();
+        float deltaTime = -1.0f;
+
         while (!glfwWindowShouldClose(glfwWindow)) {
             // Poll events
             glfwPollEvents();
@@ -103,12 +110,18 @@ public class Window {
             glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
             glClear(GL_COLOR_BUFFER_BIT);
 
-            if(KeyListener.isKeyPressed(GLFW_KEY_E)) {
-                System.out.println("E");
-            }
+
+
+            SceneHandler.getInstance().getCurrentScene().update(deltaTime);
+
 
 
             glfwSwapBuffers(glfwWindow);
+
+            // Time
+            endTime = Time.getTime();
+            deltaTime = endTime - beginTime;
+            beginTime = Time.getTime();
         }
 
     }
