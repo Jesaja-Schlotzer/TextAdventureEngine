@@ -1,5 +1,8 @@
-package jade;
+package engine;
 
+import engine.io.KeyListener;
+import engine.io.MouseListener;
+import engine.scenes.SceneHandler;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
@@ -93,8 +96,6 @@ public class Window {
         // creates the GLCapabilities instance and makes the OpenGL
         // bindings available for use.
         GL.createCapabilities();
-
-
     }
 
 
@@ -127,6 +128,10 @@ public class Window {
             // ----------------
 
 
+
+
+
+
             // Poll events
             glfwPollEvents();
 
@@ -138,7 +143,16 @@ public class Window {
 
             System.out.println(currentFPS);
 
+
+
             glfwSwapBuffers(glfwWindow);
+
+
+
+
+
+
+
 
             // Time
             endTime = Time.getTime();

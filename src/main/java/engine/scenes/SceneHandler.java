@@ -1,5 +1,8 @@
-package jade;
+package engine.scenes;
 
+/**
+ * The {@code SceneHandler}
+ */
 public class SceneHandler {
 
     public static SceneHandler instance;

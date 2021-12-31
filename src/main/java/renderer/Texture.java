@@ -13,6 +13,7 @@ public class Texture {
     private String filepath;
     private int textureID;
 
+
     public Texture(String filepath) {
         this.filepath = filepath;
 
@@ -51,9 +52,11 @@ public class Texture {
         stbi_image_free(image);
     }
 
+
     public void bind() {
         glBindTexture(GL_TEXTURE_2D, textureID);
     }
+
 
     public void unbind() {
         glBindTexture(GL_TEXTURE_2D, 0);
