@@ -7,24 +7,27 @@ import renderer.Renderer;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Scene {
 
+public abstract class Scene {
     protected Renderer renderer = new Renderer();
     protected Camera camera;
     private boolean isRunning = false;
     protected List<GameObject> gameObjects = new ArrayList<>();
 
+
     public Scene() {
 
     }
 
+
     public void init() {
         for (GameObject go : gameObjects) {
             go.init();
-            this.renderer.add(go);
+            renderer.add(go);
         }
         isRunning = true;
     }
+
 
     public void addGameObjectToScene(GameObject go) {
         if (!isRunning) {
@@ -32,13 +35,15 @@ public abstract class Scene {
         } else {
             gameObjects.add(go);
             go.init();
-            this.renderer.add(go);
+            renderer.add(go);
         }
     }
 
-    public abstract void update(float dt);
 
-    public Camera camera() {
+    public abstract void update(float deltaTime);
+
+
+    public Camera getCamera() {
         return this.camera;
     }
 }

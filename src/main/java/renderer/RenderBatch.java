@@ -1,6 +1,7 @@
 package renderer;
 
 import components.SpriteRenderer;
+import data.AssetPool;
 import engine.scenes.SceneHandler;
 import org.joml.Vector4f;
 
@@ -34,18 +35,19 @@ public class RenderBatch {
     private int maxBatchSize;
     private Shader shader;
 
+
     public RenderBatch(int maxBatchSize) {
-        shader = new Shader("assets/shaders/default.glsl");
-        shader.compile();
+        shader = AssetPool.getShader("assets/shaders/default.glsl");
         this.sprites = new SpriteRenderer[maxBatchSize];
         this.maxBatchSize = maxBatchSize;
 
-        // 4 vertices quads
+        // 4 vertices per quad
         vertices = new float[maxBatchSize * 4 * VERTEX_SIZE];
 
         this.numSprites = 0;
         this.hasRoom = true;
     }
+
 
     public void init() {
         // Generate and bind a Vertex Array Object
@@ -55,7 +57,7 @@ public class RenderBatch {
         // Allocate space for vertices
         vboID = glGenBuffers();
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
-        glBufferData(GL_ARRAY_BUFFER, vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, (long) vertices.length * Float.BYTES, GL_DYNAMIC_DRAW);
 
         // Create and upload indices buffer
         int eboID = glGenBuffers();
@@ -71,10 +73,11 @@ public class RenderBatch {
         glEnableVertexAttribArray(1);
     }
 
-    public void addSprite(SpriteRenderer spr) {
+
+    public void addSprite(SpriteRenderer spriteRenderer) {
         // Get index and add renderObject
         int index = this.numSprites;
-        this.sprites[index] = spr;
+        this.sprites[index] = spriteRenderer;
         this.numSprites++;
 
         // Add properties to local vertices array
@@ -85,6 +88,7 @@ public class RenderBatch {
         }
     }
 
+
     public void render() {
         // For now, we will rebuffer all data every frame
         glBindBuffer(GL_ARRAY_BUFFER, vboID);
@@ -92,8 +96,8 @@ public class RenderBatch {
 
         // Use shader
         shader.use();
-        shader.uploadMat4f("uProjection", SceneHandler.getInstance().getCurrentScene().camera().getProjectionMatrix());
-        shader.uploadMat4f("uView", SceneHandler.getInstance().getCurrentScene().camera().getViewMatrix());
+        shader.uploadMat4f("uProjection", SceneHandler.getInstance().getCurrentScene().getCamera().getProjectionMatrix());
+        shader.uploadMat4f("uView", SceneHandler.getInstance().getCurrentScene().getCamera().getViewMatrix());
 
         glBindVertexArray(vaoID);
         glEnableVertexAttribArray(0);
@@ -108,13 +112,14 @@ public class RenderBatch {
         shader.detach();
     }
 
+
     private void loadVertexProperties(int index) {
-        SpriteRenderer sprite = this.sprites[index];
+        SpriteRenderer spriteRenderer = this.sprites[index];
 
         // Find offset within array (4 vertices per sprite)
         int offset = index * 4 * VERTEX_SIZE;
 
-        Vector4f color = sprite.getColor();
+        Vector4f color = spriteRenderer.getColor();
 
         // Add vertices with the appropriate properties
         float xAdd = 1.0f;
@@ -129,8 +134,8 @@ public class RenderBatch {
             }
 
             // Load position
-            vertices[offset] = sprite.gameObject.transform.position.x + (xAdd * sprite.gameObject.transform.scale.x);
-            vertices[offset + 1] = sprite.gameObject.transform.position.y + (yAdd * sprite.gameObject.transform.scale.y);
+            vertices[offset] = spriteRenderer.gameObject.transform.position.x + (xAdd * spriteRenderer.gameObject.transform.scale.x);
+            vertices[offset + 1] = spriteRenderer.gameObject.transform.position.y + (yAdd * spriteRenderer.gameObject.transform.scale.y);
 
             // Load color
             vertices[offset + 2] = color.x;
@@ -142,6 +147,7 @@ public class RenderBatch {
         }
     }
 
+
     private int[] generateIndices() {
         // 6 indices per quad (3 per triangle)
         int[] elements = new int[6 * maxBatchSize];
@@ -151,6 +157,7 @@ public class RenderBatch {
 
         return elements;
     }
+
 
     private void loadElementIndices(int[] elements, int index) {
         int offsetArrayIndex = 6 * index;
@@ -167,6 +174,7 @@ public class RenderBatch {
         elements[offsetArrayIndex + 4] = offset + 2;
         elements[offsetArrayIndex + 5] = offset + 1;
     }
+
 
     public boolean hasRoom() {
         return this.hasRoom;

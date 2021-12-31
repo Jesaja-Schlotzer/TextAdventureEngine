@@ -2,11 +2,15 @@ package engine.scenes;
 
 
 import components.SpriteRenderer;
+import data.AssetPool;
 import engine.Camera;
 import engine.GameObject;
 import engine.Transform;
+import engine.io.KeyListener;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+
+import static org.lwjgl.glfw.GLFW.*;
 
 
 public class TestScene extends Scene {
@@ -36,11 +40,28 @@ public class TestScene extends Scene {
                 this.addGameObjectToScene(go);
             }
         }
+
+
+        AssetPool.getShader("assets/shaders/default.glsl");
     }
 
 
     @Override
     public void update(float deltaTime) {
+
+
+        if (KeyListener.isKeyPressed(GLFW_KEY_RIGHT)) {
+            camera.position.x += 100f * deltaTime;
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_LEFT)) {
+            camera.position.x -= 100f * deltaTime;
+        }
+        if (KeyListener.isKeyPressed(GLFW_KEY_UP)) {
+            camera.position.y += 100f * deltaTime;
+        } else if (KeyListener.isKeyPressed(GLFW_KEY_DOWN)) {
+            camera.position.y -= 100f * deltaTime;
+        }
+
+
         for (GameObject go : this.gameObjects) {
             go.update(deltaTime);
         }
