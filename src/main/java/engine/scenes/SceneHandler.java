@@ -1,5 +1,7 @@
 package engine.scenes;
 
+import game.scenes.MainMenuScene;
+
 /**
  * The {@code SceneHandler}
  */
@@ -18,7 +20,7 @@ public class SceneHandler {
     private Scene currentScene;
 
     private SceneHandler() {
-        currentScene = new TestScene();
+        currentScene = new MainMenuScene();
         currentScene.init();
     }
 

@@ -158,7 +158,6 @@ public class BatchRenderer {
 
             // Load texture id
             vertices[offset + 8] = texId;
-            System.out.println(texId);
             offset += VERTEX_SIZE;
         }
     }

@@ -1,5 +1,7 @@
 package engine.io;
 
+import input.MouseHandler;
+
 import static org.lwjgl.glfw.GLFW.GLFW_PRESS;
 import static org.lwjgl.glfw.GLFW.GLFW_RELEASE;
 
@@ -30,6 +32,7 @@ public class MouseListener {
     }
 
 
+
     public static void mousePosCallback(long window, double xPos, double yPos) {
         getInstance().lastX = getInstance().xPos;
         getInstance().lastY = getInstance().yPos;
@@ -41,6 +44,12 @@ public class MouseListener {
                 getInstance().mouseButtonPressed[0] ||
                 getInstance().mouseButtonPressed[1] ||
                 getInstance().mouseButtonPressed[2];
+
+
+        // TODO Workaround:
+
+        MouseHandler.mouseX = (int) xPos;
+        MouseHandler.mouseY = (int) yPos;
     }
 
 
@@ -48,11 +57,23 @@ public class MouseListener {
         if(action == GLFW_PRESS) {
             if(button < getInstance().mouseButtonPressed.length) {
                 getInstance().mouseButtonPressed[button] = true;
+
+
+                // TODO Workaround:
+                MouseHandler.mousePressed = true;
+
+
             }
         }else if(action == GLFW_RELEASE) {
             if(button < getInstance().mouseButtonPressed.length) {
                 getInstance().mouseButtonPressed[button] = false;
                 getInstance().isDragging = false;
+
+
+                // TODO Workaround:
+                MouseHandler.mousePressed = false;
+
+
             }
         }
     }
@@ -100,7 +121,7 @@ public class MouseListener {
         return getInstance().isDragging;
     }
 
-    public static boolean mouseButtonDown(int button) {
+    public static boolean isPressed(int button) {
         if(button < getInstance().mouseButtonPressed.length) {
             return getInstance().mouseButtonPressed[button];
         }else {

@@ -1,0 +1,41 @@
+// -----------------------Font-----------------------
+//D:\JetBrains Projects\IntelliJ\TextAdventureEngine\assets\Font\pixelFont.font
+//MAX_CHAR_WIDTH = 5 : 5
+//MAX_CHAR_HEIGHT = 7 : 7
+//ADDITIONAL_SPACE_TOP = 1 : 1
+//ADDITIONAL_SPACE_BOTTOM = 1 : 1
+//CHAR_SPACING = 1 : 1
+//WORD_SPACING = 3 : 3
+//LINE_SPACING = 2 : 2
+// ---------------------Ende-Font---------------------
+
+// -----------------------Font-----------------------
+//D:\JetBrains Projects\IntelliJ\TextAdventureEngine\assets\Font\bigPixelFont.font
+//MAX_CHAR_WIDTH = 10 : 10
+//MAX_CHAR_HEIGHT = 14 : 14
+//ADDITIONAL_SPACE_TOP = 2 : 2
+//ADDITIONAL_SPACE_BOTTOM = 2 : 2
+//CHAR_SPACING = 2 : 2
+//WORD_SPACING = 6 : 6
+//LINE_SPACING = 4 : 4
+// ---------------------Ende-Font---------------------
+// -----------------------Font-----------------------
+//D:\JetBrains Projects\IntelliJ\TextAdventureEngine\assets\Font\symbolFont.font
+//MAX_CHAR_WIDTH = 7 : 7
+//MAX_CHAR_HEIGHT = 7 : 7
+//ADDITIONAL_SPACE_TOP = 1 : 1
+//ADDITIONAL_SPACE_BOTTOM = 1 : 1
+//CHAR_SPACING = 1 : 1
+//WORD_SPACING = 3 : 3
+//LINE_SPACING = 2 : 2
+// ---------------------Ende-Font---------------------
+// -----------------------Font-----------------------
+//D:\JetBrains Projects\IntelliJ\TextAdventureEngine\assets\Font\testFont.font
+//MAX_CHAR_WIDTH = 7 : 7
+//MAX_CHAR_HEIGHT = 10 : 10
+//ADDITIONAL_SPACE_TOP = 1 : 1
+//ADDITIONAL_SPACE_BOTTOM = 1 : 1
+//CHAR_SPACING = 1 : 1
+//WORD_SPACING = 3 : 3
+//LINE_SPACING = 2 : 2
+// ---------------------Ende-Font---------------------

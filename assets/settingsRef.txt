@@ -1,0 +1,7 @@
+Fullscreen: 
+Resolution: 
+load-methode: 
+language: 
+cursor: 
+
+difficulty: 

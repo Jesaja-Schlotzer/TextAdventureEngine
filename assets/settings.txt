@@ -1,0 +1,7 @@
+Fullscreen: 0
+Resolution: 1024x768 3
+load-methode: 1
+language: de
+cursor: 
+
+difficulty: 
