@@ -1,5 +1,6 @@
 package data;
 
+import components.Spritesheet;
 import renderer.Shader;
 import renderer.Texture;
 
@@ -13,6 +14,7 @@ import java.util.Map;
 public class AssetPool {
     private static final Map<String, Shader> shaderPool = new HashMap<>();
     private static final Map<String, Texture> texturePool = new HashMap<>();
+    private static Map<String, Spritesheet> spritesheets = new HashMap<>();
 
     /**
      * Returns the wanted {@code Shader} object. If not already loaded, the {@code Shader} is first loaded and then returned.
@@ -45,5 +47,22 @@ public class AssetPool {
             AssetPool.texturePool.put(file.getAbsolutePath(), texture);
             return texture;
         }
+    }
+
+
+    public static void addSpritesheet(String resourceName, Spritesheet spritesheet) {
+        File file = new File(resourceName);
+        if (!AssetPool.spritesheets.containsKey(file.getAbsolutePath())) {
+            AssetPool.spritesheets.put(file.getAbsolutePath(), spritesheet);
+        }
+    }
+
+
+    public static Spritesheet getSpritesheet(String resourceName) {
+        File file = new File(resourceName);
+        if (!AssetPool.spritesheets.containsKey(file.getAbsolutePath())) {
+            assert false : "Error: Tried to access spritesheet '" + resourceName + "' and it has not been added to asset pool.";
+        }
+        return AssetPool.spritesheets.getOrDefault(file.getAbsolutePath(), null);
     }
 }

@@ -6,7 +6,6 @@ import engine.scenes.SceneHandler;
 import org.lwjgl.Version;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.opengl.GL;
-import util.Time;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -100,38 +99,11 @@ public class Window {
 
 
     private void loop() {
-        float beginTime = Time.getTime();
+        float beginTime = (float) glfwGetTime();
         float endTime;
         float deltaTime = -1.0f;
 
-
-        int targetFps = 60;
-        int targetTime = (int) (1e9 / targetFps);
-
-        long lastFPScheck = 0;
-        long currentFPS = 0;
-        long totalFrames = 0;
-
         while (!glfwWindowShouldClose(glfwWindow)) {
-
-
-            // ----------------
-
-            totalFrames++;
-            if(System.nanoTime() > lastFPScheck + 1E9) {
-                lastFPScheck = System.nanoTime();
-                currentFPS = totalFrames;
-                totalFrames = 0;
-            }
-            long startTime = System.nanoTime();
-
-            // ----------------
-
-
-
-
-
-
             // Poll events
             glfwPollEvents();
 
@@ -141,37 +113,14 @@ public class Window {
 
             SceneHandler.getInstance().getCurrentScene().update(deltaTime);
 
-            System.out.println(currentFPS);
-
-
 
             glfwSwapBuffers(glfwWindow);
 
 
-
-
-
-
-
-
             // Time
-            endTime = Time.getTime();
+            endTime = (float) glfwGetTime();
             deltaTime = endTime - beginTime;
             beginTime = endTime;
-
-            // --------------------
-
-            long timeTaken = System.nanoTime() - startTime;
-
-            if(timeTaken < targetTime && false) {
-                try {
-                    Thread.sleep((targetTime - timeTaken) / 1000000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            // ---------------------
         }
 
     }
